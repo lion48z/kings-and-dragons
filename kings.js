@@ -2,19 +2,11 @@ let canvas = document.querySelector('canvas');
 let c = canvas.getContext('2d');
 canvas.width = 1024; // 64*16
 canvas.height = 576; // 64*9
-class Sprite {
-  constructor ({position}) {
-    this.position = position;
-    this.image = new Image();
-    this.image.src ='img/backgroundLevel1.png' 
-  }
-  draw() {
-    c.drawImage(this.image, this.position.x, this.position.y)
-  }
-}
 
-const backgroundLevel1 = new Sprite({
+
+const backgroundLevel1 = new Sprite({         //use object to make position descriptive and easier to read 
   position: {x: 0, y: 0},
+  imageSrc: './img/backgroundLevel1.png',
 })
 const player = new Player();
 const keys = {
