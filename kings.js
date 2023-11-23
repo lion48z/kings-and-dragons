@@ -2,25 +2,10 @@ let canvas = document.querySelector('canvas');
 let c = canvas.getContext('2d');
 canvas.width = 1024; // 64*16
 canvas.height = 576; // 64*9
-const collisionBlocks = []
+
  const parsedCollisions = collisionsLevel1.parse2D()
  //console.log(parsedCollisions)
- parsedCollisions.forEach((row, y) => {
-    //console.log(row) 
-    row.forEach((symbol, x) => {
-        //console.log(symbol)
-        if (symbol === 292) {
-           //push a new collision into collision blocks array
-           collisionBlocks.push(new CollisonBlock({
-                position: {
-                    x: x *64,
-                    y: y * 64,
-                },
-           })
-           )
-        }
-    })
-})
+ const collisionBlocks = parsedCollisions.createObjectsFrom2D()
 
 const backgroundLevel1 = new Sprite({         //use object to make position descriptive and easier to read 
   position: {x: 0, y: 0},
