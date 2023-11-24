@@ -11,7 +11,9 @@ const backgroundLevel1 = new Sprite({         //use object to make position desc
   position: {x: 0, y: 0},
   imageSrc: './img/backgroundLevel1.png',
 })
-const player = new Player();
+const player = new Player({
+  collisionBlocks,
+});
 const keys = {
   w: {
     pressed: false,
