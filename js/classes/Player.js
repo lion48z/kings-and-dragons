@@ -24,6 +24,8 @@ class Player extends Sprite {
       c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }*/
     update() {
+      //c.fillStyle = "rgba(255, 0, 0, 0.5"; player shadow box 
+     // c.fillRect(this.position.x, this.position.y, this.width, this.height);
       this.position.x += this.velocity.x;
       //check horizontal collisions
       this.checkForHorizontalCollisions();
