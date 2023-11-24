@@ -13,6 +13,8 @@ const backgroundLevel1 = new Sprite({         //use object to make position desc
 })
 const player = new Player({
   collisionBlocks,
+  imageSrc:'./img/king/idle.png',
+  frameRate: 11,
 });
 const keys = {
   w: {
