@@ -11,12 +11,16 @@ class Sprite {
       this.image.src = imageSrc;
       this.loaded = false;
       this.frameRate = frameRate;
+      this.currentFrame = 0; 
+      this.elapsedFrames =0;
+      this.frameBuffer = 2;
+
     }
     draw() {
       if (!this.loaded) return
       const cropbox = {
         position: {
-          x:0,
+          x: this.width * this.currentFrame,
           y: 0,
         },
         width: this.width,
@@ -33,5 +37,13 @@ class Sprite {
            this.width,
            this.height,
           )
+          this.updateFrames();
     }
+    updateFrames(){
+      this.elapsedFrames++;
+      if (this.elapsedFrames % this.frameBuffer === 0) {
+      if (this.currentFrame < this.frameRate - 1) this.currentFrame++;
+      else this.currentFrame = 0;
+      }
+      }
   }
