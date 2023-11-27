@@ -1,10 +1,31 @@
 window.addEventListener('keydown', (event) => {
-    //console.log(event); testing event listener
-    switch (event.key) {
-      case 'w':
-        if (player.velocity.y === 0)  player.velocity.y = -25;
-        //console.log("i pressed w")
-        break;
+  if (player.preventInput) return
+  switch (event.key) {
+    case 'w':
+      for (let i = 0; i < doors.length; i++) {
+        const door = doors[i]
+
+        if (
+          player.hitbox.position.x + player.hitbox.width <=
+            door.position.x + door.width &&
+          player.hitbox.position.x >= door.position.x &&
+          player.hitbox.position.y + player.hitbox.height >= door.position.y &&
+          player.hitbox.position.y <= door.position.y + door.height
+        ) 
+        
+        //console.log('we are colliding with door');
+        {
+          player.velocity.x = 0
+          player.velocity.y = 0
+          player.preventInput = true
+          player.switchSprite('enterDoor')
+          door.play()
+          return
+        }
+      }
+      if (player.velocity.y === 0) player.velocity.y = -25
+
+      break
         case 'a': 
         keys.a.pressed = true;
         //move player left

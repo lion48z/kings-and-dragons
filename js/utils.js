@@ -11,7 +11,7 @@ Array.prototype.createObjectsFrom2D = function () {
         //console.log(row) 
         row.forEach((symbol, x) => {
             //console.log(symbol)
-            if (symbol === 292) {
+            if (symbol === 292 || symbol === 250) {     //may have to update for other levels if collision data changes 
                //push a new collision into collision blocks array
               objects.push(new CollisonBlock({
                     position: {
