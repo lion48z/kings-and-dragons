@@ -8,6 +8,17 @@ let parsedCollisions
 let collisionBlocks 
 let background 
 let doors 
+const enemyBomb = new EnemyBomb({
+  imageSrc:'./img/Sprites/Pigthrowingabomb/idle.png',
+  frameRate: 10,
+  animations: {
+    idleRight: {
+      frameRate: 10,
+      frameBuffer: 2,
+      loop: true,
+      imageSrc: './img/Sprites/Pigthrowingabomb/idle.png',
+    },
+},})
 const player = new Player({
   
   imageSrc:'./img/king/idle.png',
@@ -67,33 +78,55 @@ const player = new Player({
 let level = 1 //start at level 1
 //create object with all levels
 let levels = {
-    1:{
-      init: () =>{
-        parsedCollisions  = collisionsLevel1.parse2D() //create global and then add into each level
-        //console.log(parsedCollisions)
-        collisionBlocks = parsedCollisions.createObjectsFrom2D()
-        player.collisionBlocks = collisionBlocks
-        if (player.currentAnimation) player.currentAnimation.isActive = false
-        background = new Sprite({         //use object to make position descriptive and easier to read 
-        position: {x: 0, y: 0},
+  1: {
+    init: () => {
+      parsedCollisions = collisionsLevel1.parse2D();
+      collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      player.collisionBlocks = collisionBlocks;
+      if (player.currentAnimation) player.currentAnimation.isActive = false;
+      background = new Sprite({
+        position: { x: 0, y: 0 },
         imageSrc: './img/backgroundLevel1.png',
-})
-      doors =[
+      });
+      doors = [
         new Sprite({
           position: {
             x: 767,
             y: 274,
-          }, 
+          },
           imageSrc: './img/doorOpen.png',
           frameRate: 5,
           frameBuffer: 5,
           loop: false,
           autoplay: false,
-        })
-      ]
-      },
-      
+        }),
+      ];
+
+      // Instantiate enemyBombInstance for level 1
+      const enemyBombInstance = new EnemyBomb({
+        collisionBlocks: collisionBlocks,
+        imageSrc: './img/Pigthrowingabomb/idle.png',
+        frameRate: 10,
+        animations: {
+          idleRight: {
+            frameRate: 10,
+            frameBuffer: 2,
+            loop: true,
+            imageSrc: './img/Pigthrowingabomb/idle.png',
+          },
+        },
+      });
+
+      // Set the initial position of the enemyBombInstance
+      enemyBombInstance.position = {
+        x: 300,
+        y: 300,
+      };
+
+      // Add the enemyBombInstance to an array or some data structure to keep track of it
+      levels[1].enemyBombs = [enemyBombInstance];
     },
+  },
   
     2:{
       init: () =>{
@@ -194,6 +227,10 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);//fades canvas
   c.restore(); //restores canvas
 }
+/*levels[level].enemyBombs.forEach((enemyBombInstance) => {
+  enemyBombInstance.update(); // You need to implement an update method in the EnemyBomb class
+  enemyBombInstance.draw();   // You need to implement a draw method in the EnemyBomb class
+});*/
 levels[level].init();
 animate(); // calling animate
 
