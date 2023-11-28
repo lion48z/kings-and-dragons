@@ -2,8 +2,8 @@ class EnemyBomb extends Sprite {
     constructor({ collisionBlocks = [], imageSrc, frameRate, animations, loop }) {
       super({ imageSrc, frameRate, animations, loop });
       this.position = {
-        x: 200,
-        y: 200,
+        x: 550, // Set your desired initial x position
+        y: 250, // Set your desired initial y position
       };
       this.velocity = {
         x: 0,
@@ -12,9 +12,9 @@ class EnemyBomb extends Sprite {
       this.sides = {
         bottom: this.position.y + this.height,
       };
-      this.gravity = 1;
+      this.gravity = 0; // Set gravity to zero to disable falling
       this.collisionBlocks = collisionBlocks;
-      //console.log(this.collisionBlocks);
+      this.frameCount = 0;
     }
   
     update() {
@@ -27,15 +27,37 @@ class EnemyBomb extends Sprite {
     }
   
     draw() {
-      // Implement the logic to draw the enemyBomb on the canvas
-      c.drawImage(
-        this.image,
-        this.position.x,
-        this.position.y,
-        this.width,
-        this.height
-      );
-    }
+        //c.fillStyle = 'rgba(255, 0,0,0.5)';
+      //c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      const frameIndex = Math.floor(this.frameCount / this.frameRate) % 10; // assuming 10 frames
+
+      // Calculate the width and height of each frame
+      const frameWidth = this.image.width / 10; // assuming 10 frames
+      const frameHeight = this.image.height;
+    
+        // Draw the image with the calculated dimensions
+        c.drawImage(
+          this.image,
+          frameIndex * frameWidth,
+          0,
+          frameWidth,
+          frameHeight,
+          this.position.x,
+          this.position.y,
+          frameWidth,
+          frameHeight
+        );
+       this.frameCount++
+      }
+      switchSprite(name){
+        if (this.image === this.animations[name].image) return;
+        this.currentFrame = 0;
+        this.image = this.animations[name].image;
+        this.frameRate = this.animations[name].frameRate;
+        this.frameBuffer = this.animations[name].frameBuffer;
+        this.loop = this.animations[name].loop;
+        this.currentAnimation = this.animations[name];
+      }
   
     updateHitbox() {
       this.hitbox = {
@@ -44,7 +66,7 @@ class EnemyBomb extends Sprite {
           y: this.position.y + 34,
         },
         width: 50,
-        height: 53,
+        height:53,
       };
     }
   

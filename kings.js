@@ -8,15 +8,16 @@ let parsedCollisions
 let collisionBlocks 
 let background 
 let doors 
+
 const enemyBomb = new EnemyBomb({
-  imageSrc:'./img/Sprites/Pigthrowingabomb/idle.png',
+  imageSrc:'./img/Pigthrowingabomb/idle.png',
   frameRate: 10,
   animations: {
     idleRight: {
       frameRate: 10,
       frameBuffer: 2,
       loop: true,
-      imageSrc: './img/Sprites/Pigthrowingabomb/idle.png',
+      imageSrc: './img/Pigthrowingabomb/idle.png',
     },
 },})
 const player = new Player({
@@ -83,7 +84,10 @@ let levels = {
       parsedCollisions = collisionsLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
+      enemyBomb.position.x = 550;
+      enemyBomb.position.y = 250;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
+      if (enemyBomb.currentAnimation) enemyBomb.currentAnimation.isActive = false;
       background = new Sprite({
         position: { x: 0, y: 0 },
         imageSrc: './img/backgroundLevel1.png',
@@ -102,61 +106,44 @@ let levels = {
         }),
       ];
 
-      // Instantiate enemyBombInstance for level 1
-      const enemyBombInstance = new EnemyBomb({
-        collisionBlocks: collisionBlocks,
-        imageSrc: './img/Pigthrowingabomb/idle.png',
-        frameRate: 10,
-        animations: {
-          idleRight: {
-            frameRate: 10,
-            frameBuffer: 2,
-            loop: true,
-            imageSrc: './img/Pigthrowingabomb/idle.png',
-          },
-        },
-      });
-
-      // Set the initial position of the enemyBombInstance
-      enemyBombInstance.position = {
-        x: 300,
-        y: 300,
-      };
-
-      // Add the enemyBombInstance to an array or some data structure to keep track of it
-      levels[1].enemyBombs = [enemyBombInstance];
+     
     },
   },
   
-    2:{
-      init: () =>{
-        parsedCollisions  = collisionsLevel2.parse2D() //create global and then add into each level
-        //console.log(parsedCollisions)
-        collisionBlocks = parsedCollisions.createObjectsFrom2D()
-        player.collisionBlocks = collisionBlocks
-        player.position.x = 46;
-        player.position.y = 158;
-        if (player.currentAnimation) player.currentAnimation.isActive = false
-        background = new Sprite({         //use object to make position descriptive and easier to read 
-        position: {x: 0, y: 0},
+  2: {
+    init: () => {
+      parsedCollisions = collisionsLevel2.parse2D();
+      collisionBlocks = parsedCollisions.createObjectsFrom2D();
+      player.collisionBlocks = collisionBlocks;
+      enemyBomb.position.x = 550;
+      enemyBomb.position.y = 440;
+      
+      player.position.x = 46;
+      player.position.y = 158;
+      if (player.currentAnimation) player.currentAnimation.isActive = false;
+      if (enemyBomb.currentAnimation) enemyBomb.currentAnimation.isActive = false;
+      background = new Sprite({
+        position: { x: 0, y: 0 },
         imageSrc: './img/backgroundLevel2.png',
-})
-      doors =[
+      });
+      doors = [
         new Sprite({
           position: {
             x: 772,
             y: 336,
-          }, 
+          },
           imageSrc: './img/doorOpen.png',
           frameRate: 5,
           frameBuffer: 5,
           loop: false,
           autoplay: false,
-        })
-      ]
-      },
-      
+        }),
+      ];
+  
+     
     },
+  },
+  
     3:{
       init: () =>{
         parsedCollisions  = collisionsLevel3.parse2D() //create global and then add into each level
@@ -165,7 +152,10 @@ let levels = {
         player.collisionBlocks = collisionBlocks
         player.position.x = 750;
         player.position.y = 230;
-        if (player.currentAnimation) player.currentAnimation.isActive = false
+        enemyBomb.position.x = 145;
+        enemyBomb.position.y = 360;
+        if (player.currentAnimation) player.currentAnimation.isActive = false;
+        if (enemyBomb.currentAnimation) enemyBomb.currentAnimation.isActive = false;
         background = new Sprite({         //use object to make position descriptive and easier to read 
         position: {x: 0, y: 0},
         imageSrc: './img/backgroundLevel3.png',
@@ -187,9 +177,6 @@ let levels = {
       
     },
 }
-
-
-
 
 
 const keys = {
@@ -220,6 +207,8 @@ function animate() {
   player.handleInput(keys );
   player.draw();
   player.update();
+  enemyBomb.draw();
+  enemyBomb.update();
   c.save(); //saves
   c.globalAlpha = overlay.opacity; //dynamically fades in and out must assign above
 
@@ -227,10 +216,7 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);//fades canvas
   c.restore(); //restores canvas
 }
-/*levels[level].enemyBombs.forEach((enemyBombInstance) => {
-  enemyBombInstance.update(); // You need to implement an update method in the EnemyBomb class
-  enemyBombInstance.draw();   // You need to implement a draw method in the EnemyBomb class
-});*/
+
 levels[level].init();
 animate(); // calling animate
 
