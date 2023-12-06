@@ -23,7 +23,7 @@ const enemyBomb = new EnemyBomb({
       frameRate: 18,
       frameBuffer: 2,
       loop: false,
-      imageSrc: './img/Pigthrowingabomb/throwing.png',
+      imageSrc:'./img/Pigthrowingabomb/throwing.png',
     },
     pickingup: {
       frameRate: 5,
@@ -31,12 +31,7 @@ const enemyBomb = new EnemyBomb({
       loop: true,
       imageSrc: './img/Pigthrowingabomb/pickingbomb.png',
     },
-    run: {
-      frameRate: 6,
-      frameBuffer: 2,
-      loop: true,
-      imageSrc: './img/Pigthrowingabomb/run.png',
-    },
+  
     boomon: {
       frameRate: 5,
       frameBuffer: 2,
@@ -80,10 +75,12 @@ const player = new Player({
       imageSrc: './img/king/runLeft.png',
     },
     attack: {
-      frameRate: 20,
-      frameBuffer: 4,
+      frameRate: 40,       // Adjust the frame rate to control the overall speed
+      frameBuffer: 5,   // Adjust the frame buffer to slow down each frame
       loop: true,
-      imageSrc: './img/king/attackhammer.png',
+      imageSrc: 
+        './img/king/attackhammer.png',  // Frame 1
+        
     },
     enterDoor: {
       frameRate: 8,

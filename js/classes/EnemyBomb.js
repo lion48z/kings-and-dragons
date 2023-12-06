@@ -42,6 +42,7 @@ class EnemyBomb extends Sprite {
           0,
           frameWidth,
           frameHeight,
+         
           this.position.x,
           this.position.y,
           frameWidth,

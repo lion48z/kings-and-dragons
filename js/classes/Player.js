@@ -26,6 +26,7 @@ class Player extends Sprite {
     update() {
     //c.fillStyle = "rgba(0, 0, 255, 0.5)"; //player shadow box 
     //c.fillRect(this.position.x, this.position.y, this.width, this.height);
+     
       this.position.x += this.velocity.x;
       //check horizontal collisions
       this.updateHitbox();
@@ -49,6 +50,7 @@ class Player extends Sprite {
         this.switchSprite('attack')
         this.velocity.x = 0
         this.lastDirection = 'right'
+        console.log('s is pressed')
       }
         
       else if (keys.a.pressed) {

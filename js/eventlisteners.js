@@ -30,6 +30,10 @@ window.addEventListener('keydown', (event) => {
         keys.a.pressed = true;
         //move player left
         break;
+        case 's': 
+        keys.s.pressed = true;
+        //attack
+        break;
         case 'd':
          keys.d.pressed = true;
           //move player right 
@@ -43,6 +47,11 @@ window.addEventListener('keydown', (event) => {
         case 'a':
           // stop moving player to the left
           keys.a.pressed = false;
+          player.velocity.x = 0; // set x velocity to 0
+          break;
+          case 's':
+          // stop attack
+          keys.s.pressed = false;
           player.velocity.x = 0; // set x velocity to 0
           break;
         case 'd':

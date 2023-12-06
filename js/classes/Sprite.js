@@ -1,6 +1,6 @@
 class Sprite {
     constructor ({ 
-        position, 
+        position,
         imageSrc, 
         frameRate = 1, 
         animations, 
