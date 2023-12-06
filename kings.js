@@ -19,6 +19,36 @@ const enemyBomb = new EnemyBomb({
       loop: true,
       imageSrc: './img/Pigthrowingabomb/idle.png',
     },
+    throwing: {
+      frameRate: 18,
+      frameBuffer: 2,
+      loop: false,
+      imageSrc: './img/Pigthrowingabomb/throwing.png',
+    },
+    pickingup: {
+      frameRate: 5,
+      frameBuffer: 2,
+      loop: true,
+      imageSrc: './img/Pigthrowingabomb/pickingbomb.png',
+    },
+    run: {
+      frameRate: 6,
+      frameBuffer: 2,
+      loop: true,
+      imageSrc: './img/Pigthrowingabomb/run.png',
+    },
+    boomon: {
+      frameRate: 5,
+      frameBuffer: 2,
+      loop: false,
+      imageSrc: './img/Pigthrowingabomb/boomon.png',
+    },
+    boom: {
+      frameRate: 5,
+      frameBuffer: 2,
+      loop: false,
+      imageSrc: './img/Pigthrowingabomb/boom.png',
+    },
 },})
 const player = new Player({
   
@@ -76,6 +106,11 @@ const player = new Player({
   },
 });
 
+function getDistanceBetween(x1,y1,x2,y2) {
+  const dx = x2 - x1     //define distance between x axis enemy and player
+  const dy = y2 - y1      //define distance between y axis enemy and player
+  return Math.sqrt(dx * dx + dy * dy)   // calculation using Pythagorean theorem to get teth distance in 2D
+}
 let level = 1 //start at level 1
 //create object with all levels
 let levels = {
@@ -194,8 +229,43 @@ const overlay = {
   opacity: 0,
 }
 
+
+let lastThrowTime = 0;  // Variable to track the last time the throw animation was triggered
+const throwCooldown = 1000;  // Set a cooldown period in milliseconds
+
 function animate() {
   window.requestAnimationFrame(animate);
+  const currentTime = Date.now(); // Get the current time
+  //calculate distance between player and enemy 
+  const distance = getDistanceBetween(
+    player.position.x,
+    player.position.y,
+    enemyBomb.position.x,
+    enemyBomb.position.y
+  ); 
+  const triggerDistance = 175;    // set threshold for distance between that initiates switching sprite
+  const playerInFront = player.position.x < enemyBomb.position.x;
+
+  // Check distance between player and trigger distance
+  if (distance <= triggerDistance && playerInFront) {
+    // Check if cooldown has elapsed since the last throw animation
+    if (currentTime - lastThrowTime > throwCooldown) {
+      // Check if the bomb is not already in the throwing animation
+      if (!enemyBomb.currentAnimation || enemyBomb.currentAnimation.name !== 'throwing') {
+        enemyBomb.switchSprite('throwing');
+        lastThrowTime = currentTime;
+        console.log('enemy throws');
+      }
+    }
+  } else {
+    // If the player is outside the trigger distance or behind the enemy, switch back to idle animation
+    enemyBomb.switchSprite('idleRight');
+  }
+  const frameIndex = Math.floor(enemyBomb.frameCount / enemyBomb.frameRate) % 10;
+  if (frameIndex === 5 && enemyBomb.currentAnimation.name === 'throwing') {
+    // Trigger the bomb animation and release
+    enemyBomb.switchSprite('boomon');
+  }
   
   background.draw();
   collisionBlocks.forEach(collisionBlock => {

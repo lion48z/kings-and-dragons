@@ -49,7 +49,7 @@ class EnemyBomb extends Sprite {
         );
        this.frameCount++
       }
-      switchSprite(name){
+     /* switchSprite(name){
         if (this.image === this.animations[name].image) return;
         this.currentFrame = 0;
         this.image = this.animations[name].image;
@@ -57,7 +57,33 @@ class EnemyBomb extends Sprite {
         this.frameBuffer = this.animations[name].frameBuffer;
         this.loop = this.animations[name].loop;
         this.currentAnimation = this.animations[name];
-      }
+      }*/
+      // Add a bomb animation configuration to the EnemyBomb class
+
+
+// Modify the switchSprite method in the EnemyBomb class
+switchSprite(name) {
+  if (this.image === this.animations[name].image) return;
+
+
+  // If transitioning from throwing to bomb, set up onComplete callback
+  if (name === 'boomon' && this.currentAnimation && this.currentAnimation.name === 'throwing' && !this.animations[name].onComplete) {
+    this.animations[name].onComplete = () => {
+      // Transition to idleRight once bomb has been released
+      this.switchSprite('idleRight');
+    };
+    console.log('Bomb animation triggered!');
+  }
+ 
+  this.currentFrame = 0;
+  this.image = this.animations[name].image;
+  this.frameRate = this.animations[name].frameRate;
+  this.frameBuffer = this.animations[name].frameBuffer;
+  this.loop = this.animations[name].loop;
+  this.currentAnimation = this.animations[name];
+}
+
+
   
     updateHitbox() {
       this.hitbox = {
