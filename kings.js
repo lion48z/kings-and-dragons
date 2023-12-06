@@ -17,10 +17,10 @@ const enemyBomb = new EnemyBomb({
       frameRate: 10,
       frameBuffer: 2,
       loop: true,
-      imageSrc: './img/Pigthrowingabomb/idle.png',
+      imageSrc: './img/Pigthrowingabomb/idlelg.png',
     },
     throwing: {
-      frameRate: 18,
+      frameRate: 15,
       frameBuffer: 2,
       loop: false,
       imageSrc:'./img/Pigthrowingabomb/throwing.png',
@@ -33,15 +33,14 @@ const enemyBomb = new EnemyBomb({
     },
   
     boomon: {
-      frameRate: 5,
+      frameRate: 4,
       frameBuffer: 2,
       loop: false,
       imageSrc: './img/Pigthrowingabomb/boomon.png',
     },
     boom: {
       frameRate: 5,
-      frameBuffer: 2,
-      loop: false,
+      frameBuffer: 0.5,
       imageSrc: './img/Pigthrowingabomb/boom.png',
     },
 },})
@@ -75,11 +74,11 @@ const player = new Player({
       imageSrc: './img/king/runLeft.png',
     },
     attack: {
-      frameRate: 40,       // Adjust the frame rate to control the overall speed
-      frameBuffer: 5,   // Adjust the frame buffer to slow down each frame
+      frameRate: 3,       // Adjust the frame rate to control the overall speed
+      frameBuffer: 4,   // Adjust the frame buffer to slow down each frame
       loop: true,
       imageSrc: 
-        './img/king/attackhammer.png',  // Frame 1
+        './img/king/attackhammer1.png',  // Frame 1
         
     },
     enterDoor: {
@@ -122,8 +121,8 @@ let levels = {
       parsedCollisions = collisionsLevel1.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
-      enemyBomb.position.x = 550;
-      enemyBomb.position.y = 250;
+      enemyBomb.position.x = 540;
+      enemyBomb.position.y = 225;
       if (player.currentAnimation) player.currentAnimation.isActive = false;
       if (enemyBomb.currentAnimation) enemyBomb.currentAnimation.isActive = false;
       background = new Sprite({
@@ -153,8 +152,8 @@ let levels = {
       parsedCollisions = collisionsLevel2.parse2D();
       collisionBlocks = parsedCollisions.createObjectsFrom2D();
       player.collisionBlocks = collisionBlocks;
-      enemyBomb.position.x = 550;
-      enemyBomb.position.y = 440;
+      enemyBomb.position.x = 545;
+      enemyBomb.position.y = 418;
       
       player.position.x = 46;
       player.position.y = 158;
@@ -190,8 +189,8 @@ let levels = {
         player.collisionBlocks = collisionBlocks
         player.position.x = 750;
         player.position.y = 230;
-        enemyBomb.position.x = 145;
-        enemyBomb.position.y = 360;
+        enemyBomb.position.x = 135;
+        enemyBomb.position.y = 335;
         if (player.currentAnimation) player.currentAnimation.isActive = false;
         if (enemyBomb.currentAnimation) enemyBomb.currentAnimation.isActive = false;
         background = new Sprite({         //use object to make position descriptive and easier to read 
